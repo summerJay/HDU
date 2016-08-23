@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model>
+    <name>TimeDep</name>
+	<states>
+		<state>
+			<source>true</source>
+			<name>S0</name>
+			<arcs>
+				<arc>
+					<name>arc1</name>
+					<constraint key="prop">1</constraint>
+					<condition>a&gt;0</condition>
+					<to>S1</to>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>S1</name>
+			<arcs>
+				<arc>
+					<name>arc2</name>
+					<constraint key="prop">1</constraint>
+					<innerArcs>
+						<innerArc>
+							<name>innerArc1</name>
+							<constraint key="time">0,1</constraint>
+							<to>S3</to>
+						</innerArc>
+						<innerArc>
+							<name>innerArc2</name>
+							<constraint key="time">1,+</constraint>
+							<to>S4</to>
+						</innerArc>
+					</innerArcs>
+				</arc>
+
+			</arcs>
+
+		</state>
+		<state label="timeDelay">
+			<name>S3</name>
+			<time>3,5</time>
+			<arcs>
+				<arc>
+					<name>arc12</name>
+					<constraint key="prop">0.5</constraint>
+					<condition>b&gt;3</condition>
+					<to>S5</to>
+				</arc>
+				<arc>
+					<name>arc3</name>
+					<constraint key="prop">0.5</constraint>
+					<condition>c&lt;=8</condition>
+					<to>Exit</to>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>S4</name>
+			<arcs>
+				<arc>
+					<name>arc4</name>
+					<constraint key="prop">0.5</constraint>
+					<to>Exit</to>
+				</arc>
+				<arc>
+					<name>arc6</name>
+					<constraint key="prop">0.5</constraint>
+					<to>S7</to>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>S5</name>
+			<arcs>
+				<arc>
+					<name>arc5</name>
+					<constraint key="prop">1</constraint>
+					<innerArcs>
+						<innerArc>
+							<name>innerArc3</name>
+							<constraint key="time">0,2</constraint>
+							<to>S6</to>
+						</innerArc>
+						<innerArc>
+							<name>innerArc4</name>
+							<constraint key="time">2,6</constraint>
+							<to>S7</to>
+						</innerArc>
+					</innerArcs>
+				</arc>
+			</arcs>
+		</state>
+		<state label="timeDelay">
+			<name>S6</name>
+			<time>2,5</time>
+			<arcs>
+				<arc>
+					<name>arc7</name>
+					<constraint key="prop">1</constraint>
+					<to>S8</to>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>S7</name>
+			<arcs>
+				<arc>
+					<name>arc8</name>
+					<constraint key="prop">1</constraint>
+					<to>Exit</to>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>S8</name>
+			<arcs>
+				<arc>
+					<name>arc9</name>
+					<constraint key="prop">1</constraint>
+					<to>Exit</to>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<sink>true</sink>
+			<name>Exit</name>
+		</state>
+	</states>
+</Model>

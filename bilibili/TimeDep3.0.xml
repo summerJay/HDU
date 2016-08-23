@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Model>
+    <name>TimeDep</name>
+		<state label = "inital">
+			<name>S0</name>
+			<arc label = "prob">
+				<name>arc1</name>
+				<condition key="prob">1</condition>
+				<stimulate>
+				      <parameter>
+				            <paramName>x</paramName>
+				            <paramType>double</paramType>
+				            <domain type = "serial">1.0&#8804;x&#8804;6.0</domain>
+				      </parameter>
+				      <parameter>
+							 	<paramName>y</paramName>
+								<paramType>double</paramType>
+								<domain type="serial">3.0&lt;y&#8804;9.0</domain>
+							</parameter>
+				      <constraint>6.0&#8804;x+y&lt;13.0</constraint>
+				      <constraint>-2.0&#8804;x-y&lt;3.0</constraint>
+				</stimulate>
+				<to>S1</to>
+			</arc>
+		</state>
+		<state>
+			<name>S1</name>
+			<arc label = "time">
+		  		<name>innerArc1</name>
+		  		<condition key="time">0,1</condition>
+		  		<to>S3</to>
+			</arc>	
+			<arc label = "time" >
+				<name>innerArc2</name>
+				<condition key="time">1,+</condition>
+				<to>S4</to>
+			</arc>
+		</state>
+		<state label="timeDelay">
+			<name>S3</name>
+			<time>3,5</time>
+			<arc label = "prob">
+				<name>arc12</name>
+				<condition key="prob">0.5</condition>
+				<stimulate>
+					<parameter>
+						<paramName>b</paramName>
+						<paramType>int</paramType>
+					</parameter>
+					<constraint>b&#8804;3</constraint>
+				</stimulate>
+				<to>S5</to>
+			</arc>
+			<arc label = "prob">
+				<name>arc3</name>
+				<condition key="prob">0.5</condition>
+				<stimulate>
+					<parameter>
+						<paramName>c</paramName>
+						<paramType>int</paramType>
+						<domain type = "serial">c&lt;=8</domain>
+					</parameter>
+				</stimulate>
+				<to>Exit</to>
+			</arc>
+		</state>
+		<state>
+			<name>S4</name>
+			<arc label = "prob">
+				<name>arc4</name>
+				<condition key="prob">0.5</condition>
+				<to>Exit</to>
+			</arc>
+			<arc label = "prob">
+				<name>arc6</name>
+				<condition key="prob">0.5</condition>
+				<to>S7</to>
+			</arc>
+		</state>
+		<state>
+			<name>S5</name>
+			<arc label = "time">
+				<name>innerArc3</name>
+				<condition key="time">0,2</condition>
+				<to>S6</to>
+			</arc>
+			<arc label = "time">
+				<name>innerArc4</name>
+				<condition key="time">2,6</condition>
+				<to>S7</to>
+			</arc>
+		</state>
+		<state label="timeDelay">
+			<name>S6</name>
+			<time>2,5</time>
+			<arc label = "prob">
+				<name>arc7</name>
+				<condition key="prob">1</condition>
+				<to>S8</to>
+			</arc>
+		</state>
+		<state>
+			<name>S7</name>
+			<arc label = "prob">
+				<name>arc8</name>
+				<condition key="prob">1</condition>
+				<to>Exit</to>
+			</arc>
+		</state>
+		<state>
+			<name>S8</name>
+			<arc label = "prob">
+				<name>arc9</name>
+				<condition key="prob">1</condition>
+				<to>Exit</to>
+			</arc>
+		</state>
+		<state label = "final">
+			<name>Exit</name>
+		</state>
+</Model>

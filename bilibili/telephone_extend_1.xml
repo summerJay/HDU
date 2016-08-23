@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<markov>
+	<states>
+		<state label="initial">
+			<name>On Hook</name>
+			<arcs>
+				<arc>
+					<stimulate>
+						<name>incomming call</name>
+						<parameters>
+							<parameter>
+							 	<paramName>x</paramName>
+								<paramType>double</paramType>
+								<domain type="serial">1.0&#8804;x&#8804;6.0</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>y</paramName>
+								<paramType>double</paramType>
+								<domain type="serial">3.0&lt;y&#8804;9.0</domain>
+							</parameter>
+							<constraints>
+								<constraint>6.0&#8804;x+y&lt;13.0</constraint>
+								<constraint>-2.0&#8804;x-y&lt;3.0</constraint>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Ringing</to>
+					<probability>0.5</probability>
+				</arc>
+				<arc>
+					<stimulate>
+						<name>lift receiver</name>
+						<parameters>
+							<parameter>
+							 	<paramName>a</paramName>
+								<paramType>double</paramType>
+								<domain type="serial">2.0&#8804;a&#8804;6.0</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>route</paramName>
+								<paramType>string</paramType>
+								<domain type="discrete">straight,curve</domain>
+							</parameter>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Off Hook</to>
+					<probability>0.5</probability>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>Ringing</name>
+			<arcs>
+				<arc>
+					<stimulate>
+						<name>lift receiver</name>
+						<parameters>
+							<parameter>
+							 	<paramName>x</paramName>
+								<paramType>int</paramType>
+								<domain type="serial">0&#8804;x&#8804;6</domain>
+							</parameter>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Connected</to>
+					<probability>0.5</probability>
+				</arc>
+				<arc>
+					<stimulate>
+						<name>disconnect</name>
+						<parameters>
+							<parameter>
+							 	<paramName>mode</paramName>
+								<paramType>string</paramType>
+								<domain type="discrete">A,B,C</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>height</paramName>
+								<paramType>string</paramType>
+								<domain type="discrete">G,D</domain>
+							</parameter>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>On Hook</to>
+					<probability>0.5</probability>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>Off Hook</name>
+			<arcs>
+				<arc>
+					<stimulate>
+						<name>dial bad</name>
+						<parameters>
+							<parameter>
+							 	<paramName>m</paramName>
+								<paramType>int</paramType>
+								<domain type="serial">1&#8804;m&#8804;6</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>speed</paramName>
+								<paramType>string</paramType>
+								<domain type="discrete">F,M,S</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>n</paramName>
+								<paramType>int</paramType>
+								<domain type="serial">3&lt;n&#8804;9</domain>
+							</parameter>
+							<constraints>
+								<constraint>6&#8804;m+n&lt;13</constraint>
+								<constraint>-2&#8804;m-n&lt;3</constraint>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Error Tone</to>
+					<probability>0.25</probability>
+				</arc>
+				<arc>
+					<stimulate>
+						<name>dial busy</name>
+						<parameters>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Busy Tone</to>
+					<probability>0.25</probability>
+				</arc>
+
+				<arc>
+					<stimulate>
+						<name>dial good</name>
+						<parameters>
+							<parameter>
+							 	<paramName>b</paramName>
+								<paramType>double</paramType>
+								<domain type="serial">b&gt;1.0</domain>
+							</parameter>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Ring Tone</to>
+					<probability>0.25</probability>
+				</arc>
+				<arc>
+					<stimulate>
+						<name>hang up</name>
+						<parameters>
+							<parameter>
+							 	<paramName>c</paramName>
+								<paramType>int</paramType>
+								<domain type="discrete">3,6,7</domain>
+							</parameter>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Exit</to>
+					<probability>0.25</probability>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>Connected</name>
+			<arcs>
+				<arc>
+					<stimulate>
+						<name>disconnect</name>
+						<parameters>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Off Hook</to>
+					<probability>0.5</probability>
+				</arc>
+				<arc>
+					<stimulate>
+						<name>hang up</name>
+						<parameters>
+							<parameter>
+							 	<paramName>d</paramName>
+								<paramType>double</paramType>
+								<domain type="serial">2.0&#8804;d&#8804;6.0</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>e</paramName>
+								<paramType>int</paramType>
+								<domain type="serial">3&#8804;e&#8804;10</domain>
+							</parameter>
+							<constraints>
+								<constraint>12&#8804;d*e&lt;49</constraint>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Exit</to>
+					<probability>0.5</probability>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>Busy Tone</name>
+			<arcs>
+				<arc>
+					<stimulate>
+						<name>hang up</name>
+						<parameters>
+							<parameter>
+							 	<paramName>f</paramName>
+								<paramType>double</paramType>
+								<domain type="serial">8.0&#8804;f&#8804;16.0</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>g</paramName>
+								<paramType>int</paramType>
+								<domain type="discrete">6,8,12</domain>
+							</parameter>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Exit</to>
+					<probability>1.0</probability>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>Error Tone</name>
+			<arcs>
+				<arc>
+					<stimulate>
+						<name>hang up</name>
+						<parameters>
+							<parameter>
+							 	<paramName>i</paramName>
+								<paramType>int</paramType>
+								<domain type="discrete">66,77,88</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>j</paramName>
+								<paramType>double</paramType>
+								<domain type="discrete">8.8,10.6,11.8</domain>
+							</parameter>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Exit</to>
+					<probability>1.0</probability>
+				</arc>
+			</arcs>
+		</state>
+		<state>
+			<name>Ring Tone</name>
+			<arcs>
+				<arc>
+					<stimulate>
+						<name>hang up</name>
+						<parameters>
+							<parameter>
+							 	<paramName>o</paramName>
+								<paramType>double</paramType>
+								<domain type="serial">3.0&#8804;o&#8804;11.8</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>pattern</paramName>
+								<paramType>string</paramType>
+								<domain type="discrete">P1,P2,P3</domain>
+							</parameter>
+							<parameter>
+							 	<paramName>q</paramName>
+								<paramType>int</paramType>
+								<domain type="serial">6&#8804;q&#8804;20</domain>
+							</parameter>
+							<constraints>
+								<constraint>o+q&lt;16.0</constraint>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Exit</to>
+					<probability>0.5</probability>
+				</arc>
+				<arc>
+					<stimulate>
+						<name>connect</name>
+						<parameters>
+							<constraints>
+							</constraints>
+						</parameters>
+					</stimulate>
+					<to>Connected</to>
+					<probability>0.5</probability>
+				</arc>
+			</arcs>
+		</state>
+		<state label="final">
+			<name>Exit</name>
+			<arcs></arcs>
+		</state>
+	</states>
+</markov>

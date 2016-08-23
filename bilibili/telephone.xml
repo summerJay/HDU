@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<markov>
+  <states>
+    <state label="initial">
+      <name>On Hook</name>
+      <arcs>
+        <arc>
+          <name>incomming call</name>
+          <to>Ringing</to>
+          <probability>0.5</probability>
+        </arc>
+        <arc>
+          <name>lift receiver</name>
+          <to>Off Hook</to>
+          <probability>0.5</probability>
+        </arc>
+      </arcs>
+    </state>
+    <state>
+      <name>Ringing</name>
+      <arcs>
+        <arc>
+          <name>lift receiver</name>
+          <to>Connected</to>
+          <probability>0.5</probability>
+        </arc>
+        <arc>
+          <name>disconnect</name>
+          <to>On Hook</to>
+          <probability>0.5</probability>
+        </arc>
+      </arcs>
+    </state>
+    <state>
+      <name>Off Hook</name>
+      <arcs>
+        <arc>
+          <name>dial bad</name>
+          <to>Error Tone</to>
+          <probability>0.25</probability>
+        </arc>
+        <arc>
+          <name>dial busy</name>
+          <to>Busy Tone</to>
+          <probability>0.25</probability>
+        </arc>
+
+        <arc>
+          <name>dial good</name>
+          <to>Ring Tone</to>
+          <probability>0.25</probability>
+        </arc>
+        <arc>
+          <name>hang up</name>
+          <to>Exit</to>
+          <probability>0.25</probability>
+        </arc>
+      </arcs>
+    </state>
+    <state>
+      <name>Connected</name>
+      <arcs>
+        <arc>
+          <name>disconnect</name>
+          <to>Off Hook</to>
+          <probability>0.5</probability>
+        </arc>
+        <arc>
+          <name>hang up</name>
+          <to>Exit</to>
+          <probability>0.5</probability>
+        </arc>
+      </arcs>
+    </state>
+    <state>
+      <name>Busy Tone</name>
+      <arcs>
+        <arc>
+          <name>hang up</name>
+          <to>Exit</to>
+          <probability>1.0</probability>
+        </arc>
+      </arcs>
+    </state>
+    <state>
+      <name>Error Tone</name>
+      <arcs>
+        <arc>
+          <name>hang up</name>
+          <to>Exit</to>
+          <probability>1.0</probability>
+        </arc>
+      </arcs>
+    </state>
+    <state>
+      <name>Ring Tone</name>
+      <arcs>
+        <arc>
+          <name>hang up</name>
+          <to>Exit</to>
+          <probability>0.5</probability>
+        </arc>
+        <arc>
+          <name>connect</name>
+          <to>Connected</to>
+          <probability>0.5</probability>
+        </arc>
+      </arcs>
+    </state>
+    <state label="final">
+      <name>Exit</name>
+      <arcs></arcs>
+    </state>
+  </states>
+</markov>
